@@ -1,4 +1,3 @@
-
 import { ImageResponse } from "next/og";
 
 export const alt = "Bilal Ahmed — Full-Stack Developer & SaaS Builder";
@@ -40,8 +39,7 @@ export default function OpenGraphImage() {
           }}
         >
           Full-Stack Developer
-          <br />
-          & SaaS Builder
+          <br />& SaaS Builder
         </div>
 
         <div
@@ -59,4 +57,3 @@ export default function OpenGraphImage() {
     size,
   );
 }
-

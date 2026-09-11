@@ -17,6 +17,7 @@
   --accent: #2563eb;
   --accent-soft: rgba(37, 99, 235, 0.08);
   --success: #15803d;
+  --destructive: #dc2626;
   --muted-strong: #475467;
   --border-strong: #cfd4dc;
   --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
@@ -38,6 +39,7 @@
   --accent: #60a5fa;
   --accent-soft: rgba(96, 165, 250, 0.12);
   --success: #4ade80;
+  --destructive: #f87171;
   --muted-strong: #d0d5dd;
   --border-strong: #3b4350;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
@@ -54,6 +56,7 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-border: var(--border);
   --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
   --radius-sm: calc(var(--radius) - 0.4rem);
   --radius-md: calc(var(--radius) - 0.2rem);
   --radius-lg: var(--radius);
@@ -83,8 +86,16 @@ body {
 
 .bg-grid {
   background-image:
-    linear-gradient(to right, color-mix(in srgb, var(--foreground) 7%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, var(--foreground) 7%, transparent) 1px, transparent 1px);
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--foreground) 7%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--foreground) 7%, transparent) 1px,
+      transparent 1px
+    );
   background-size: 32px 32px;
 }
 
@@ -100,7 +111,7 @@ body {
   color: var(--foreground);
   padding: 0.75rem 1rem;
   font-weight: 700;
-  box-shadow: 0 10px 30px rgba(0,0,0,.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
 }
 
 .skip-link:focus {
@@ -134,7 +145,9 @@ a {
 .reveal {
   opacity: 0;
   transform: translateY(18px);
-  transition: opacity 650ms ease, transform 650ms cubic-bezier(.2,.8,.2,1);
+  transition:
+    opacity 650ms ease,
+    transform 650ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .reveal-visible {
@@ -151,7 +164,10 @@ a {
 }
 
 .interactive-lift {
-  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
 }
 
 .interactive-lift:hover {
@@ -163,13 +179,25 @@ a {
 }
 
 @keyframes float-y {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 @keyframes pulse-soft {
-  0%, 100% { opacity: .55; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
 @media (max-width: 639px) {

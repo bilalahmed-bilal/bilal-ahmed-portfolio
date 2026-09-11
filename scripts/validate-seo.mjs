@@ -19,8 +19,22 @@ for (const [label, file] of checks) {
 }
 const layout = fs.readFileSync(path.join(root, "src/app/layout.tsx"), "utf8");
 const metadataImports = (layout.match(/import type \{ Metadata/g) ?? []).length;
-if (metadataImports !== 1) { console.error(`FAIL duplicate Metadata imports: ${metadataImports}`); failed = true; } else console.log("PASS single Metadata import");
-const requiredCanonicalRoutes = ["/", "/about", "/services", "/projects", "/skills", "/process", "/contact", "/projects/ksts", "/projects/autoseo", "/projects/uaios"];
+if (metadataImports !== 1) {
+  console.error(`FAIL duplicate Metadata imports: ${metadataImports}`);
+  failed = true;
+} else console.log("PASS single Metadata import");
+const requiredCanonicalRoutes = [
+  "/",
+  "/about",
+  "/services",
+  "/projects",
+  "/skills",
+  "/process",
+  "/contact",
+  "/projects/ksts",
+  "/projects/autoseo",
+  "/projects/uaios",
+];
 for (const route of requiredCanonicalRoutes) {
   const file = route === "/" ? "src/app/page.tsx" : `src/app${route}/page.tsx`;
   const content = fs.readFileSync(path.join(root, file), "utf8");

@@ -20,8 +20,10 @@ export const caseStudies: CaseStudy[] = [
     slug: "ksts",
     eyebrow: "Booking · Business Systems · SaaS",
     title: "KSTS — Multi-company Bus Booking Platform",
-    summary: "A business-focused booking and operations platform designed around shared inventory, multi-office workflows, schedules, trips, passengers, and role-based access.",
-    overview: "KSTS is being developed as a centralized platform for bus-ticket operations. The architecture is designed so authorized offices and sales channels work against the same booking inventory instead of maintaining disconnected seat data.",
+    summary:
+      "A business-focused booking and operations platform designed around shared inventory, multi-office workflows, schedules, trips, passengers, and role-based access.",
+    overview:
+      "KSTS is being developed as a centralized platform for bus-ticket operations. The architecture is designed so authorized offices and sales channels work against the same booking inventory instead of maintaining disconnected seat data.",
     problem: [
       "Booking operations can become difficult to coordinate when different offices maintain separate availability information.",
       "Seat inventory needs to remain consistent when multiple users interact with the same trip.",
@@ -38,7 +40,15 @@ export const caseStudies: CaseStudy[] = [
       "Supabase Realtime planned/used as the real-time synchronization layer for seat availability.",
       "Prisma repository/data-access layer for structured database operations.",
     ],
-    technologies: ["Next.js", "React", "TypeScript", "PostgreSQL", "Supabase", "Prisma", "Tailwind CSS"],
+    technologies: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "PostgreSQL",
+      "Supabase",
+      "Prisma",
+      "Tailwind CSS",
+    ],
     features: [
       "Multi-office booking operations",
       "Bus and seat-layout management",
@@ -55,14 +65,21 @@ export const caseStudies: CaseStudy[] = [
       "Separating platform-level permissions from company-level operational access.",
     ],
     status: "Active development",
-    highlights: ["Shared inventory architecture", "Multi-office workflows", "Role-aware data boundaries", "Real-time availability design"],
+    highlights: [
+      "Shared inventory architecture",
+      "Multi-office workflows",
+      "Role-aware data boundaries",
+      "Real-time availability design",
+    ],
   },
   {
     slug: "autoseo",
     eyebrow: "AI · SEO · Automation",
     title: "AutoSEO — AI SEO & Marketing Automation",
-    summary: "An AI-powered SEO and marketing automation product focused on repeatable analysis, content workflows, technical SEO, and operational automation.",
-    overview: "AutoSEO is being designed to reduce repetitive SEO work by combining structured analysis, AI-assisted workflows, and automation-oriented product flows in one web application.",
+    summary:
+      "An AI-powered SEO and marketing automation product focused on repeatable analysis, content workflows, technical SEO, and operational automation.",
+    overview:
+      "AutoSEO is being designed to reduce repetitive SEO work by combining structured analysis, AI-assisted workflows, and automation-oriented product flows in one web application.",
     problem: [
       "SEO work often involves repetitive audits, content decisions, analysis, and follow-up actions.",
       "Teams need structured information instead of isolated AI outputs.",
@@ -79,7 +96,15 @@ export const caseStudies: CaseStudy[] = [
       "Extensible integration architecture for future external SEO/data providers.",
       "Automation-oriented flows designed to turn analysis into repeatable actions.",
     ],
-    technologies: ["Next.js", "React", "TypeScript", "AI APIs", "SEO tooling", "REST APIs", "Tailwind CSS"],
+    technologies: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "AI APIs",
+      "SEO tooling",
+      "REST APIs",
+      "Tailwind CSS",
+    ],
     features: [
       "SEO analysis workflows",
       "Technical SEO checks",
@@ -94,14 +119,21 @@ export const caseStudies: CaseStudy[] = [
       "Designing for future integrations without coupling the application to a single provider.",
     ],
     status: "In progress",
-    highlights: ["AI-assisted workflows", "Technical SEO focus", "Automation-first product design", "Extensible integrations"],
+    highlights: [
+      "AI-assisted workflows",
+      "Technical SEO focus",
+      "Automation-first product design",
+      "Extensible integrations",
+    ],
   },
   {
     slug: "uaios",
     eyebrow: "AI · SaaS · Business Architecture",
     title: "UAIOS — Universal AI Business OS",
-    summary: "A modular foundation for an AI-enabled business operating system, focused on business modules, permissions, structured data, and extensible workflows.",
-    overview: "UAIOS is an architecture-led product concept. The current work focuses on establishing a reliable business-system foundation that can support multiple modules and AI-assisted workflows without prematurely locking the product into one narrow use case.",
+    summary:
+      "A modular foundation for an AI-enabled business operating system, focused on business modules, permissions, structured data, and extensible workflows.",
+    overview:
+      "UAIOS is an architecture-led product concept. The current work focuses on establishing a reliable business-system foundation that can support multiple modules and AI-assisted workflows without prematurely locking the product into one narrow use case.",
     problem: [
       "Businesses often operate across disconnected tools, workflows, and datasets.",
       "Adding AI to fragmented systems can create more complexity instead of reducing it.",
@@ -134,7 +166,12 @@ export const caseStudies: CaseStudy[] = [
       "Separating current foundation capabilities from future product ambitions.",
     ],
     status: "Foundation stage",
-    highlights: ["Modular architecture", "Authorization foundation", "Database foundation", "Extensible AI direction"],
+    highlights: [
+      "Modular architecture",
+      "Authorization foundation",
+      "Database foundation",
+      "Extensible AI direction",
+    ],
     roadmap: [
       "Additional business modules",
       "More advanced AI-assisted workflows",

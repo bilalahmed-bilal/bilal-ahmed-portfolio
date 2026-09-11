@@ -26,8 +26,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Bilal Ahmed — Full-Stack Developer & SaaS Builder",
-    description:
-      "Modern SaaS, AI, automation, booking, API, and business-system development.",
+    description: "Modern SaaS, AI, automation, booking, API, and business-system development.",
     type: "website",
     url: "/",
     images: [{ url: "/opengraph-image" }],
@@ -36,8 +35,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Bilal Ahmed — Full-Stack Developer & SaaS Builder",
-    description:
-      "Modern SaaS, AI, automation, booking, API, and business-system development.",
+    description: "Modern SaaS, AI, automation, booking, API, and business-system development.",
     images: ["/opengraph-image"],
   },
   robots: {
@@ -46,43 +44,59 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = { width: "device-width", initialScale: 1, colorScheme: "dark light" };
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  colorScheme: "dark light",
+};
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
         <SiteShell>
-        <StructuredData data={{
-          "@context": "https://schema.org",
-          "@graph": [
-            {
-              "@type": "Person",
-              "@id": `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/#person`,
-              name: "Bilal Ahmed",
-              jobTitle: "Full-Stack Developer & SaaS Builder",
-              url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-              ...(process.env.NEXT_PUBLIC_GITHUB_URL || process.env.NEXT_PUBLIC_LINKEDIN_URL || process.env.NEXT_PUBLIC_UPWORK_URL
-                ? { sameAs: [process.env.NEXT_PUBLIC_GITHUB_URL, process.env.NEXT_PUBLIC_LINKEDIN_URL, process.env.NEXT_PUBLIC_UPWORK_URL].filter(Boolean) }
-                : {}),
-            },
-            {
-              "@type": "WebSite",
-              "@id": `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/#website`,
-              url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-              name: "Bilal Ahmed",
-              publisher: { "@id": `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/#person` },
-            },
-          ],
-        }} />
-        <ThemeProvider>
-          <div className="portfolio-shell">
-            <SiteHeader />
-            {children}
-            <SiteFooter />
-          </div>
-        </ThemeProvider>
-              </SiteShell>
+          <StructuredData
+            data={{
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Person",
+                  "@id": `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/#person`,
+                  name: "Bilal Ahmed",
+                  jobTitle: "Full-Stack Developer & SaaS Builder",
+                  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+                  ...(process.env.NEXT_PUBLIC_GITHUB_URL ||
+                  process.env.NEXT_PUBLIC_LINKEDIN_URL ||
+                  process.env.NEXT_PUBLIC_UPWORK_URL
+                    ? {
+                        sameAs: [
+                          process.env.NEXT_PUBLIC_GITHUB_URL,
+                          process.env.NEXT_PUBLIC_LINKEDIN_URL,
+                          process.env.NEXT_PUBLIC_UPWORK_URL,
+                        ].filter(Boolean),
+                      }
+                    : {}),
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/#website`,
+                  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+                  name: "Bilal Ahmed",
+                  publisher: {
+                    "@id": `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/#person`,
+                  },
+                },
+              ],
+            }}
+          />
+          <ThemeProvider>
+            <div className="portfolio-shell">
+              <SiteHeader />
+              {children}
+              <SiteFooter />
+            </div>
+          </ThemeProvider>
+        </SiteShell>
       </body>
     </html>
   );

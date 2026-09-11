@@ -4,7 +4,14 @@ import { FormEvent, useState } from "react";
 import { CheckCircle2, Loader2, Send } from "lucide-react";
 
 const fields = {
-  projectType: ["SaaS / Web App", "AI Integration", "Automation", "Booking / Marketplace", "API / Backend", "Other"],
+  projectType: [
+    "SaaS / Web App",
+    "AI Integration",
+    "Automation",
+    "Booking / Marketplace",
+    "API / Backend",
+    "Other",
+  ],
   budget: ["Under $500", "$500 – $1,500", "$1,500 – $3,000", "$3,000+", "Not sure yet"],
 };
 
@@ -85,13 +92,19 @@ export function ContactForm() {
         />
       </label>
 
-      <label className="absolute left-[-10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+      <label
+        className="absolute left-[-10000px] top-auto h-px w-px overflow-hidden"
+        aria-hidden="true"
+      >
         Website
         <input name="website" tabIndex={-1} autoComplete="off" />
       </label>
 
       {state === "error" && (
-        <p className="mt-4 rounded-xl border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive" role="alert">
+        <p
+          className="mt-4 rounded-xl border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive"
+          role="alert"
+        >
           {error}
         </p>
       )}
@@ -101,11 +114,18 @@ export function ContactForm() {
         disabled={state === "loading"}
         className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-6 text-sm font-bold text-primary-foreground transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {state === "loading" ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
+        {state === "loading" ? (
+          <Loader2 className="size-4 animate-spin" />
+        ) : (
+          <Send className="size-4" />
+        )}
         {state === "loading" ? "Sending..." : "Send Project Enquiry"}
       </button>
 
-      <p className="mt-4 text-xs leading-5 text-muted-foreground">Your information is used only to respond to your project enquiry. Email delivery must be configured before this form is used as a production contact channel.</p>
+      <p className="mt-4 text-xs leading-5 text-muted-foreground">
+        Your information is used only to respond to your project enquiry. Email delivery must be
+        configured before this form is used as a production contact channel.
+      </p>
     </form>
   );
 }
@@ -147,8 +167,12 @@ function Select({ label, name, options }: { label: string; name: string; options
         defaultValue=""
         className="mt-2 h-11 w-full rounded-xl border bg-background px-4 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15"
       >
-        <option value="" disabled>Select an option</option>
-        {options.map((option) => <option key={option}>{option}</option>)}
+        <option value="" disabled>
+          Select an option
+        </option>
+        {options.map((option) => (
+          <option key={option}>{option}</option>
+        ))}
       </select>
     </label>
   );

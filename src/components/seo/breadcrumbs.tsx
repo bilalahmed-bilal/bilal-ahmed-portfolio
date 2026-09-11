@@ -21,7 +21,15 @@ export function Breadcrumbs({ items }: { items: { name: string; href: string }[]
           {items.map((item, index) => (
             <li key={item.href} className="flex items-center gap-2">
               {index > 0 && <span aria-hidden="true">/</span>}
-              {index === items.length - 1 ? <span aria-current="page" className="font-medium text-foreground">{item.name}</span> : <Link href={item.href} className="hover:text-foreground">{item.name}</Link>}
+              {index === items.length - 1 ? (
+                <span aria-current="page" className="font-medium text-foreground">
+                  {item.name}
+                </span>
+              ) : (
+                <Link href={item.href} className="hover:text-foreground">
+                  {item.name}
+                </Link>
+              )}
             </li>
           ))}
         </ol>

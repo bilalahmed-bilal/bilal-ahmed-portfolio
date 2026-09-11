@@ -10,12 +10,18 @@ export function ProjectFilter() {
 
   const filtered = useMemo(() => {
     if (active === "All") return portfolioProjects;
-    return portfolioProjects.filter((project) => project.category.includes(active as ProjectCategory));
+    return portfolioProjects.filter((project) =>
+      project.category.includes(active as ProjectCategory),
+    );
   }, [active]);
 
   return (
     <div>
-      <div className="mb-10 flex flex-wrap justify-center gap-2" role="group" aria-label="Project categories">
+      <div
+        className="mb-10 flex flex-wrap justify-center gap-2"
+        role="group"
+        aria-label="Project categories"
+      >
         {projectCategories.map((category) => {
           const selected = active === category;
           return (
@@ -26,7 +32,9 @@ export function ProjectFilter() {
               onClick={() => setActive(category)}
               className={[
                 "rounded-full border px-4 py-2 text-sm font-medium transition",
-                selected ? "border-primary bg-primary text-primary-foreground" : "bg-background hover:border-primary/40 hover:bg-muted",
+                selected
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "bg-background hover:border-primary/40 hover:bg-muted",
               ].join(" ")}
             >
               {category}
@@ -37,14 +45,19 @@ export function ProjectFilter() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         {filtered.map((project) => (
-          <article key={project.slug} className="group overflow-hidden rounded-3xl border bg-card transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-2xl">
+          <article
+            key={project.slug}
+            className="group overflow-hidden rounded-3xl border bg-card transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-2xl"
+          >
             <div className="relative aspect-[16/8] overflow-hidden border-b bg-grid">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-transparent to-foreground/5" />
               <div className="absolute left-6 top-6 rounded-full border bg-background/80 px-3 py-1 text-xs font-semibold backdrop-blur">
                 {project.status}
               </div>
               <div className="absolute bottom-6 left-6">
-                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">{project.type}</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
+                  {project.type}
+                </p>
                 <h2 className="mt-1 text-4xl font-black tracking-tight">{project.name}</h2>
               </div>
             </div>
@@ -63,7 +76,12 @@ export function ProjectFilter() {
 
               <div className="mt-6 flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
-                  <span key={tag} className="rounded-md bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">{tag}</span>
+                  <span
+                    key={tag}
+                    className="rounded-md bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground"
+                  >
+                    {tag}
+                  </span>
                 ))}
               </div>
 
