@@ -67,10 +67,16 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="group flex items-center gap-3" onClick={closeMenu}>
+        <Link
+          href="/"
+          className="group flex items-center gap-3"
+          aria-label="Bilal Ahmed — Home"
+          onClick={closeMenu}
+        >
           <span className="brand-mark" aria-hidden="true">
             BA
           </span>
+
           <span className="hidden text-sm font-semibold tracking-tight sm:block">Bilal Ahmed</span>
         </Link>
 
@@ -84,6 +90,7 @@ export function SiteHeader() {
 
         <div className="hidden items-center gap-2 lg:flex">
           <ThemeToggle />
+
           <Button href="/contact" size="sm">
             Hire Me
           </Button>
