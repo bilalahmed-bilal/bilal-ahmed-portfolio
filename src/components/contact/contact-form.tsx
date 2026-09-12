@@ -15,6 +15,26 @@ const fields = {
   budget: ["Under $500", "$500 – $1,500", "$1,500 – $3,000", "$3,000+", "Not sure yet"],
 };
 
+type GtagFunction = (
+  command: "event",
+  eventName: string,
+  eventParams?: Record<string, string>,
+) => void;
+
+function trackGenerateLead(projectType: string, budget: string) {
+  const gtag = (window as Window & { gtag?: GtagFunction }).gtag;
+
+  if (!gtag) {
+    return;
+  }
+
+  gtag("event", "generate_lead", {
+    method: "portfolio_contact_form",
+    project_type: projectType || "Not specified",
+    budget: budget || "Not specified",
+  });
+}
+
 export function ContactForm() {
   const [state, setState] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [error, setError] = useState("");
@@ -26,6 +46,11 @@ export function ContactForm() {
 
     const form = event.currentTarget;
     const data = new FormData(form);
+
+    const projectType =
+      typeof data.get("projectType") === "string" ? String(data.get("projectType")).trim() : "";
+
+    const budget = typeof data.get("budget") === "string" ? String(data.get("budget")).trim() : "";
 
     try {
       const response = await fetch("/api/contact", {
@@ -39,6 +64,8 @@ export function ContactForm() {
       if (!response.ok) {
         throw new Error(result.error ?? "Something went wrong.");
       }
+
+      trackGenerateLead(projectType, budget);
 
       setState("success");
       form.reset();
@@ -54,10 +81,13 @@ export function ContactForm() {
         <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-primary/10 text-primary">
           <CheckCircle2 className="size-7" />
         </div>
+
         <h2 className="mt-5 text-2xl font-bold">Enquiry sent</h2>
+
         <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-muted-foreground">
           Thanks for reaching out. I&apos;ll review the project details and get back to you.
         </p>
+
         <button
           type="button"
           onClick={() => setState("idle")}
@@ -73,8 +103,11 @@ export function ContactForm() {
     <form onSubmit={submit} className="rounded-2xl border bg-card p-6 sm:p-8">
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Name" name="name" placeholder="Your name" required />
+
         <Field label="Email" name="email" type="email" placeholder="you@example.com" required />
+
         <Select label="Project Type" name="projectType" options={fields.projectType} />
+
         <Select label="Budget" name="budget" options={fields.budget} />
       </div>
 
@@ -119,12 +152,12 @@ export function ContactForm() {
         ) : (
           <Send className="size-4" />
         )}
+
         {state === "loading" ? "Sending..." : "Send Project Enquiry"}
       </button>
 
       <p className="mt-4 text-xs leading-5 text-muted-foreground">
-        Your information is used only to respond to your project enquiry. Email delivery must be
-        configured before this form is used as a production contact channel.
+        Your information is used only to respond to your project enquiry.
       </p>
     </form>
   );
@@ -146,6 +179,7 @@ function Field({
   return (
     <label className="block text-sm font-semibold" htmlFor={name}>
       {label}
+
       <input
         id={name}
         name={name}
@@ -162,7 +196,9 @@ function Select({ label, name, options }: { label: string; name: string; options
   return (
     <label className="block text-sm font-semibold" htmlFor={name}>
       {label}
+
       <select
+        id={name}
         name={name}
         defaultValue=""
         className="mt-2 h-11 w-full rounded-xl border bg-background px-4 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15"
@@ -170,8 +206,11 @@ function Select({ label, name, options }: { label: string; name: string; options
         <option value="" disabled>
           Select an option
         </option>
+
         {options.map((option) => (
-          <option key={option}>{option}</option>
+          <option key={option} value={option}>
+            {option}
+          </option>
         ))}
       </select>
     </label>
