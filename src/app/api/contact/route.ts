@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const MAX_BODY_BYTES = 12_000;
-
 const WINDOW_MS = 15 * 60 * 1000;
-
 const MAX_REQUESTS = 5;
 
 const buckets = new Map<string, { count: number; resetAt: number }>();
@@ -76,6 +75,15 @@ function rateLimited(key: string) {
   return current.count > MAX_REQUESTS;
 }
 
+function escapeHtml(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
 export async function POST(request: Request) {
   try {
     if (
@@ -126,13 +134,9 @@ export async function POST(request: Request) {
     }
 
     const name = typeof body.name === "string" ? body.name.trim() : "";
-
     const email = typeof body.email === "string" ? body.email.trim() : "";
-
     const projectType = typeof body.projectType === "string" ? body.projectType.trim() : "";
-
     const budget = typeof body.budget === "string" ? body.budget.trim() : "";
-
     const message = typeof body.message === "string" ? body.message.trim() : "";
 
     if (name.length < 2 || name.length > 100) {
@@ -156,9 +160,10 @@ export async function POST(request: Request) {
       );
     }
 
-    // Delivery intentionally remains disabled until a real transactional email provider is configured.
+    const apiKey = process.env.RESEND_API_KEY;
+    const recipient = process.env.CONTACT_TO_EMAIL;
 
-    if (!process.env.CONTACT_TO_EMAIL) {
+    if (!apiKey || !recipient) {
       return NextResponse.json(
         {
           error:
@@ -173,18 +178,86 @@ export async function POST(request: Request) {
       );
     }
 
-    // Provider adapter boundary: wire the configured provider here before production launch.
+    const resend = new Resend(apiKey);
+
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safeProjectType = escapeHtml(projectType || "Not specified");
+    const safeBudget = escapeHtml(budget || "Not specified");
+    const safeMessage = escapeHtml(message).replaceAll("\n", "<br />");
+
+    const { data, error } = await resend.emails.send({
+      from: "Bilal Ahmed <hello@bilalahmeddev.online>",
+      to: [recipient],
+      replyTo: email,
+      subject: "New Portfolio Project Enquiry",
+      html: `
+        <h2>New Portfolio Project Enquiry</h2>
+
+        <p><strong>Name:</strong> ${safeName}</p>
+        <p><strong>Email:</strong> ${safeEmail}</p>
+        <p><strong>Project Type:</strong> ${safeProjectType}</p>
+        <p><strong>Budget:</strong> ${safeBudget}</p>
+
+        <h3>Project Details</h3>
+        <p>${safeMessage}</p>
+
+        <hr />
+
+        <p>
+          Submitted via
+          <a href="https://bilalahmeddev.online/contact">
+            Bilal Ahmed Portfolio
+          </a>
+        </p>
+      `,
+      text: [
+        "New Portfolio Project Enquiry",
+        "",
+        `Name: ${name}`,
+        `Email: ${email}`,
+        `Project Type: ${projectType || "Not specified"}`,
+        `Budget: ${budget || "Not specified"}`,
+        "",
+        "Project Details:",
+        message,
+        "",
+        "Submitted via https://bilalahmeddev.online/contact",
+      ].join("\n"),
+      headers: {
+        "X-Entity-Ref-ID": crypto.randomUUID(),
+      },
+    });
+
+    if (error) {
+      console.error("Resend email error:", error);
+
+      return NextResponse.json(
+        { error: "Unable to send your enquiry right now." },
+        {
+          status: 502,
+          headers: {
+            "Cache-Control": "no-store",
+          },
+        },
+      );
+    }
 
     return NextResponse.json(
-      { error: "Email delivery provider is not configured." },
       {
-        status: 503,
+        ok: true,
+        id: data?.id,
+      },
+      {
+        status: 200,
         headers: {
           "Cache-Control": "no-store",
         },
       },
     );
-  } catch {
+  } catch (error) {
+    console.error("Contact API error:", error);
+
     return NextResponse.json(
       { error: "Invalid request." },
       {
