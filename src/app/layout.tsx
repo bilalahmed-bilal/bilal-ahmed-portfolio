@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { StructuredData } from "@/components/seo/structured-data";
 import { SiteShell } from "@/components/layout/site-shell";
 import type { Metadata, Viewport } from "next";
@@ -6,8 +7,12 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import "./globals.css";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
+const googleAnalyticsId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Bilal Ahmed — Full-Stack Developer & SaaS Builder",
     template: "%s | Bilal Ahmed",
@@ -61,10 +66,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               "@graph": [
                 {
                   "@type": "Person",
-                  "@id": `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/#person`,
+                  "@id": `${siteUrl}/#person`,
                   name: "Bilal Ahmed",
                   jobTitle: "Full-Stack Developer & SaaS Builder",
-                  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+                  url: siteUrl,
                   ...(process.env.NEXT_PUBLIC_GITHUB_URL ||
                   process.env.NEXT_PUBLIC_LINKEDIN_URL ||
                   process.env.NEXT_PUBLIC_UPWORK_URL
@@ -79,16 +84,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 },
                 {
                   "@type": "WebSite",
-                  "@id": `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/#website`,
-                  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+                  "@id": `${siteUrl}/#website`,
+                  url: siteUrl,
                   name: "Bilal Ahmed",
                   publisher: {
-                    "@id": `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/#person`,
+                    "@id": `${siteUrl}/#person`,
                   },
                 },
               ],
             }}
           />
+
           <ThemeProvider>
             <div className="portfolio-shell">
               <SiteHeader />
@@ -97,6 +103,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             </div>
           </ThemeProvider>
         </SiteShell>
+
+        {googleAnalyticsId ? <GoogleAnalytics gaId={googleAnalyticsId} /> : null}
       </body>
     </html>
   );
